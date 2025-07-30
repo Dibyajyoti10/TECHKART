@@ -1,9 +1,12 @@
 // jsconfig.json
 {
   "compilerOptions": {
+    "jsx": "react-jsx", // Optional, but safe to add for VS Code IntelliSense
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./*"]
+      "@/*": ["*"]
     }
-  }
+  },
+  "include": ["next-env.d.ts", "**/*.js", "**/*.jsx", "**/*.ts", "**/*.tsx"],
+  "exclude": ["node_modules"]
 }

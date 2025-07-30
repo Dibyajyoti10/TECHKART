@@ -3,12 +3,13 @@ import React, { useState } from "react";
 import { assets } from "@/assets/assets";
 import Image from "next/image";
 import { useAppContext } from "@/context/AppContext";
-import { set } from "mongoose";
 import toast from "react-hot-toast";
+import axios from "axios";
+
 
 const AddProduct = () => {
 
-  const { getToken } = useAppContext
+  const { getToken } = useAppContext();
 
   const [files, setFiles] = useState([]);
   const [name, setName] = useState('');
@@ -72,9 +73,8 @@ const AddProduct = () => {
                   const updatedFiles = [...files];
                   updatedFiles[index] = e.target.files[0];
                   setFiles(updatedFiles);
-                }} type="file" id={`image${index}`} hidden />
+                }} type="file" accept="image/*" id={`image${index}`} hidden />
                 <Image
-                  key={index}
                   className="max-w-24 cursor-pointer"
                   src={files[index] ? URL.createObjectURL(files[index]) : assets.upload_area}
                   alt=""
@@ -126,7 +126,7 @@ const AddProduct = () => {
               id="category"
               className="outline-none md:py-2.5 py-2 px-3 rounded border border-gray-500/40"
               onChange={(e) => setCategory(e.target.value)}
-              defaultValue={category}
+              value={category}
             >
               <option value="Earphone">Earphone</option>
               <option value="Headphone">Headphone</option>

@@ -1,6 +1,9 @@
 import Product from '@/app/models/product';
 import { v2 as cloudinary } from 'cloudinary';
 import { NextResponse } from 'next/server';
+import connectDataBase from '@/config/db';
+import { getAuth } from "@clerk/nextjs/server";
+import  authSeller from '@/lib/authSeller';
 
 
 cloudinary.config({
@@ -12,7 +15,7 @@ cloudinary.config({
 
 export async function POST(request){
     try {
-        const { userId } = getAuth()
+        const { userId } = await getAuth(request)
 
         const isSeller = await authSeller(userId)
 
@@ -55,6 +58,7 @@ export async function POST(request){
                             }
                         }
                     )
+                    stream.end(buffer);
                 })
             })
         )
@@ -82,7 +86,7 @@ export async function POST(request){
 
 
     }catch(error){
-        NextResponse.json({
+        return NextResponse.json({
             success: false,
             message: error.message
         })

@@ -1,8 +1,6 @@
-import { getAuth } from "@clerk/nextjs/server";
 import connectDataBase from "@/config/db";
 import { NextResponse } from "next/server";
 import Product from "app/models/product.js";
-import authSeller from '@/lib/authSeller';
 
 
 
@@ -10,16 +8,7 @@ import authSeller from '@/lib/authSeller';
 export async function GET(request) {
 
     try {
-        const { userId } = getAuth(request); 
         
-        const isSeller = authSeller(userId);
-
-        if (!isSeller) {
-            return NextResponse.json({
-                success: false,
-                message: "You are not authorized to view this page"
-            })
-        }
 
         await connectDataBase();
 
